@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:zebra_rfid_sdk_example/screens/RFIDSelectionScreen.dart';
+import 'package:zebra_rfid_sdk_example/screens/rfid_selection_screen.dart';
 import 'package:zebra_rfid_sdk_example/route_observer.dart';
 
 void main() {
@@ -11,6 +11,11 @@ class RouteObserverApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(navigatorObservers: <NavigatorObserver>[routeObserver], title: 'Zebra RFID Demo', home: RFIDSelectionScreen(), debugShowCheckedModeBanner: false);
+    return MaterialApp(
+      navigatorObservers: <NavigatorObserver>[routeObserver],
+      title: 'Zebra RFID Demo',
+      home: RFIDSelectionScreen(),
+      debugShowCheckedModeBanner: false,
+    );
   }
 }

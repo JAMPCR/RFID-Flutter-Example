@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:zebra_rfid_sdk/zebra_rfid_sdk.dart';
-import 'package:zebra_rfid_sdk_example/screens/RFIDLocateScreen.dart';
-
-import 'package:zebra_rfid_sdk_example/screens/RFIDProfileScreen.dart';
-import 'package:zebra_rfid_sdk_example/screens/RFIDRegulatoryScreen.dart';
-import 'package:zebra_rfid_sdk_example/screens/RFIDBeeperScreen.dart';
-import 'package:zebra_rfid_sdk_example/screens/RFIDMemoryReaderScreen.dart';
+import 'package:zebra_rfid_sdk_example/screens/rfid_locate_screen.dart';
+import 'package:zebra_rfid_sdk_example/screens/rfid_memory_reader_screen.dart';
 import 'package:zebra_rfid_sdk_example/widgets/menu_list.dart';
 import 'package:zebra_rfid_sdk_example/widgets/bottom_bar.dart';
 
@@ -25,7 +21,11 @@ class _RFIDOptionsScreen extends State<RFIDOptionsScreen> {
 
   void setFilter(String epc) async {
     var result = await ZebraRfidSdk.setPreFilter(epc);
-    var snackBar = SnackBar(content: Text(result ? 'Pre-filter Set' : 'Failed to set pre-filter'), backgroundColor: result ? Colors.blue[800] : Colors.red[800]);
+    if (!mounted) return;
+    var snackBar = SnackBar(
+      content: Text(result ? 'Pre-filter Set' : 'Failed to set pre-filter'),
+      backgroundColor: result ? Colors.blue[800] : Colors.red[800],
+    );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
@@ -36,7 +36,11 @@ class _RFIDOptionsScreen extends State<RFIDOptionsScreen> {
     if (killResult == true) {
       result = await ZebraRfidSdk.killTag(epc, killPassword: password);
     }
-    var snackBar = SnackBar(content: Text(result ? 'Tag killed!' : 'Failed to kill tag'), backgroundColor: result ? Colors.blue[800] : Colors.red[800]);
+    if (!mounted) return;
+    var snackBar = SnackBar(
+      content: Text(result ? 'Tag killed!' : 'Failed to kill tag'),
+      backgroundColor: result ? Colors.blue[800] : Colors.red[800],
+    );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
@@ -68,7 +72,8 @@ class _RFIDOptionsScreen extends State<RFIDOptionsScreen> {
           Navigator.push(
             context,
             PageRouteBuilder(
-              pageBuilder: (_, __, ___) => RFIDMemeoryReaderScreen(epc: widget.epc),
+              pageBuilder: (_, __, ___) =>
+                  RFIDMemeoryReaderScreen(epc: widget.epc),
               transitionDuration: const Duration(seconds: 0),
               reverseTransitionDuration: const Duration(seconds: 0),
             ),
@@ -102,7 +107,11 @@ class _RFIDOptionsScreen extends State<RFIDOptionsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('RFID Settings'), centerTitle: true, elevation: 2),
+      appBar: AppBar(
+        title: const Text('RFID Settings'),
+        centerTitle: true,
+        elevation: 2,
+      ),
       body: MenuList(items: menuItems),
       bottomNavigationBar: BottomBar(currentScreen: Screen.settings),
     );
@@ -129,7 +138,9 @@ class _RFIDOptionsScreen extends State<RFIDOptionsScreen> {
               }
               return null;
             },
-            decoration: const InputDecoration(hintText: 'Enter 8 hex digit kill password'),
+            decoration: const InputDecoration(
+              hintText: 'Enter 8 hex digit kill password',
+            ),
           ),
           actions: [
             ElevatedButton(

@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:zebra_rfid_sdk/zebra_rfid_sdk.dart';
-import 'package:zebra_rfid_sdk_example/screens/RFIDOptionScreen.dart';
+import 'package:zebra_rfid_sdk_example/screens/rfid_option_screen.dart';
 import 'dart:async';
-
 import 'package:zebra_rfid_sdk_example/widgets/battery_indicator.dart';
 import 'package:zebra_rfid_sdk_example/widgets/totals_widget.dart';
 import 'package:zebra_rfid_sdk_example/widgets/tag_list_widget.dart';
-import 'package:zebra_rfid_sdk_example/screens/RFIDLocateScreen.dart';
 import 'package:zebra_rfid_sdk_example/widgets/bottom_bar.dart';
 import 'package:zebra_rfid_sdk_example/route_observer.dart';
 
@@ -29,7 +27,6 @@ class _RFIDReadingScreen extends State<RFIDReadingScreen> with RouteAware {
   int _totalReadRate = 0;
   Timer? _timer;
   double _batteryLevel = 0;
-  ReaderDevice? _device;
   final List<TagData> _readTags = [];
 
   @override
@@ -67,8 +64,6 @@ class _RFIDReadingScreen extends State<RFIDReadingScreen> with RouteAware {
     ZebraRfidSdk.addTagHandler(tagHandler);
     ZebraRfidSdk.addDeviceHandler(connectionHandler);
     ZebraRfidSdk.getBatteryLevel();
-    _device = await ZebraRfidSdk.getConnectedReader();
-    setState(() {});
   }
 
   void _stopScreen() {
@@ -160,13 +155,18 @@ class _RFIDReadingScreen extends State<RFIDReadingScreen> with RouteAware {
         centerTitle: true,
         elevation: 2,
         actions: [
-          IconButton(icon: Icon(_totalsScreen ? Icons.list : Icons.leaderboard), onPressed: onToggleScreen),
+          IconButton(
+            icon: Icon(_totalsScreen ? Icons.list : Icons.leaderboard),
+            onPressed: onToggleScreen,
+          ),
           Center(child: BatteryIndicator(batteryLevel: _batteryLevel)),
           PopupMenuButton(
             onSelected: (i) {
               ZebraRfidSdk.setPreFilter(null);
             },
-            itemBuilder: (BuildContext context) => <PopupMenuEntry<int>>[const PopupMenuItem<int>(value: 0, child: Text('Clear Filter'))],
+            itemBuilder: (BuildContext context) => <PopupMenuEntry<int>>[
+              const PopupMenuItem<int>(value: 0, child: Text('Clear Filter')),
+            ],
           ),
         ],
       ),
@@ -174,24 +174,34 @@ class _RFIDReadingScreen extends State<RFIDReadingScreen> with RouteAware {
         padding: EdgeInsets.all(6),
         child: Center(
           child: _totalsScreen
-              ? TotalsWidget(totalReads: _totalReads.toString(), timerText: timerText, readRate: _readRate.toString(), uniqueReads: _readTags.length.toString())
+              ? TotalsWidget(
+                  totalReads: _totalReads.toString(),
+                  timerText: timerText,
+                  readRate: _readRate.toString(),
+                  uniqueReads: _readTags.length.toString(),
+                )
               : TagList(
                   tagList: _readTags,
                   onSelection: (epc) {
                     Navigator.push(
                       context,
                       PageRouteBuilder(
-                        pageBuilder: (_, __, ___) => RFIDOptionsScreen(epc: epc),
+                        pageBuilder: (_, __, ___) =>
+                            RFIDOptionsScreen(epc: epc),
                         transitionDuration: const Duration(seconds: 0),
                         reverseTransitionDuration: const Duration(seconds: 0),
                       ),
                     );
-                    ;
                   },
                 ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(onPressed: () => triggerHandler(!scanning), foregroundColor: Colors.white, backgroundColor: scanning ? Colors.red : Colors.green, child: Icon(scanning ? Icons.stop : Icons.play_arrow)),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => triggerHandler(!scanning),
+        foregroundColor: Colors.white,
+        backgroundColor: scanning ? Colors.red : Colors.green,
+        child: Icon(scanning ? Icons.stop : Icons.play_arrow),
+      ),
       bottomNavigationBar: BottomBar(currentScreen: Screen.reading),
     );
   }

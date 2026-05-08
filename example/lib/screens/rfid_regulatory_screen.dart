@@ -34,6 +34,7 @@ class _RFIDRegulatoryScreen extends State<RFIDRegulatoryScreen> {
   Future<void> getDeviceData() async {
     final availableRegions = await ZebraRfidSdk.getAvailableRegions();
     _currentRegion = await ZebraRfidSdk.getRegulatoryConfig();
+    if (!mounted) return;
     setState(() {
       _availableRegions = availableRegions;
       for (var x in _availableRegions) {
@@ -48,7 +49,15 @@ class _RFIDRegulatoryScreen extends State<RFIDRegulatoryScreen> {
   void _saveSettings() async {
     if (_currentSelectedRegion != null) {
       final result = await ZebraRfidSdk.setRegulatoryConfig(_currentRegion);
-      var snackBar = SnackBar(content: Text(result ? 'Regulatory settings stored' : "Failed to set regulatory settings"), backgroundColor: result ? Colors.blue[800] : Colors.red[800]);
+      if (!mounted) return;
+      var snackBar = SnackBar(
+        content: Text(
+          result
+              ? 'Regulatory settings stored'
+              : "Failed to set regulatory settings",
+        ),
+        backgroundColor: result ? Colors.blue[800] : Colors.red[800],
+      );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
   }
@@ -58,7 +67,11 @@ class _RFIDRegulatoryScreen extends State<RFIDRegulatoryScreen> {
     double screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Regulatory Settings'), centerTitle: true, elevation: 2),
+      appBar: AppBar(
+        title: const Text('Regulatory Settings'),
+        centerTitle: true,
+        elevation: 2,
+      ),
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
@@ -70,7 +83,9 @@ class _RFIDRegulatoryScreen extends State<RFIDRegulatoryScreen> {
               width: screenWidth - 40,
               onSelected: (RegulatoryData? newValue) {
                 _currentRegion.name = newValue != null ? newValue.name : "";
-                _currentRegion.regionCode = newValue != null ? newValue.regionCode : "";
+                _currentRegion.regionCode = newValue != null
+                    ? newValue.regionCode
+                    : "";
                 _currentRegion.channels = List<String>.empty();
                 _currentRegion.hopping = false;
                 setState(() {
@@ -78,10 +93,16 @@ class _RFIDRegulatoryScreen extends State<RFIDRegulatoryScreen> {
                 });
               },
               dropdownMenuEntries: _availableRegions.map((region) {
-                return DropdownMenuEntry<RegulatoryData>(value: region, label: "${region.name} (${region.regionCode})");
+                return DropdownMenuEntry<RegulatoryData>(
+                  value: region,
+                  label: "${region.name} (${region.regionCode})",
+                );
               }).toList(),
             ),
-            Padding(padding: EdgeInsetsGeometry.only(top: 20, bottom: 20), child: Text("Selected Channels")),
+            Padding(
+              padding: EdgeInsetsGeometry.only(top: 20, bottom: 20),
+              child: Text("Selected Channels"),
+            ),
             Flexible(
               flex: 10,
               child: _loading
@@ -101,7 +122,11 @@ class _RFIDRegulatoryScreen extends State<RFIDRegulatoryScreen> {
             CheckboxListTile(
               title: Text("Channel Hopping"),
               value: _currentRegion.hopping,
-              enabled: _currentRegion.channels.length > 1 && (_currentSelectedRegion != null ? _currentSelectedRegion!.hopping : false),
+              enabled:
+                  _currentRegion.channels.length > 1 &&
+                  (_currentSelectedRegion != null
+                      ? _currentSelectedRegion!.hopping
+                      : false),
               controlAffinity: ListTileControlAffinity.leading,
               contentPadding: EdgeInsets.symmetric(horizontal: 0),
               visualDensity: VisualDensity.compact,
@@ -119,7 +144,9 @@ class _RFIDRegulatoryScreen extends State<RFIDRegulatoryScreen> {
                 backgroundColor: Colors.grey[300],
                 minimumSize: Size(88, 36),
                 padding: EdgeInsets.symmetric(horizontal: 16),
-                shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(2))),
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(2)),
+                ),
               ),
               onPressed: () => _saveSettings(),
               child: Text("Save Settings"),

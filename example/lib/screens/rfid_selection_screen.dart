@@ -103,7 +103,7 @@ class _RFIDSelectionScreen extends State<RFIDSelectionScreen> {
                       selectedColor: Colors.amber,
                       title: Text(availableReaderList[index].name ?? "Unknown Device"),
                       subtitle: (connectedReader.name == availableReaderList.elementAt(index).name && connectedReader.connectionStatus == ConnectionStatus.connected)
-                          ? Text('Battery ${connectedReader.batteryLevel ?? '0'}%')
+                          ? Text('Battery ${connectedReader.batteryLevel}%')
                           : (connectedReader.name == availableReaderList.elementAt(index).name && connectedReader.connectionStatus == ConnectionStatus.failed)
                           ? Text(connectedReader.message ?? '')
                           : Text(''),

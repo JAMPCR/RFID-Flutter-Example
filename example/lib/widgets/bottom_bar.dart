@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:zebra_rfid_sdk_example/screens/RFIDSelectionScreen.dart';
-import 'package:zebra_rfid_sdk_example/screens/RFIDReadingScreen.dart';
-import 'package:zebra_rfid_sdk_example/screens/RFIDSettingsScreen.dart';
+import 'package:zebra_rfid_sdk_example/screens/rfid_selection_screen.dart';
+import 'package:zebra_rfid_sdk_example/screens/rfid_reading_screen.dart';
+import 'package:zebra_rfid_sdk_example/screens/rfid_settings_sreen.dart';
 
 enum Screen { selection, reading, settings }
 
@@ -13,13 +13,34 @@ class BottomBar extends StatelessWidget {
   void _onItemTapped(BuildContext context, int index) {
     switch (index) {
       case 0:
-        Navigator.of(context).pushAndRemoveUntil(PageRouteBuilder(pageBuilder: (_, __, ___) => RFIDSelectionScreen(), transitionDuration: const Duration(seconds: 0), reverseTransitionDuration: const Duration(seconds: 0)), (Route<dynamic> route) => false);
+        Navigator.of(context).pushAndRemoveUntil(
+          PageRouteBuilder(
+            pageBuilder: (_, __, ___) => RFIDSelectionScreen(),
+            transitionDuration: const Duration(seconds: 0),
+            reverseTransitionDuration: const Duration(seconds: 0),
+          ),
+          (Route<dynamic> route) => false,
+        );
         break;
       case 1:
-        Navigator.of(context).pushAndRemoveUntil(PageRouteBuilder(pageBuilder: (_, __, ___) => RFIDReadingScreen(), transitionDuration: const Duration(seconds: 0), reverseTransitionDuration: const Duration(seconds: 0)), (Route<dynamic> route) => false);
+        Navigator.of(context).pushAndRemoveUntil(
+          PageRouteBuilder(
+            pageBuilder: (_, __, ___) => RFIDReadingScreen(),
+            transitionDuration: const Duration(seconds: 0),
+            reverseTransitionDuration: const Duration(seconds: 0),
+          ),
+          (Route<dynamic> route) => false,
+        );
         break;
       case 2:
-        Navigator.of(context).pushAndRemoveUntil(PageRouteBuilder(pageBuilder: (_, __, ___) => RFIDSettingsScreen(), transitionDuration: const Duration(seconds: 0), reverseTransitionDuration: const Duration(seconds: 0)), (Route<dynamic> route) => false);
+        Navigator.of(context).pushAndRemoveUntil(
+          PageRouteBuilder(
+            pageBuilder: (_, __, ___) => RFIDSettingsScreen(),
+            transitionDuration: const Duration(seconds: 0),
+            reverseTransitionDuration: const Duration(seconds: 0),
+          ),
+          (Route<dynamic> route) => false,
+        );
         break;
     }
   }

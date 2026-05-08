@@ -15,11 +15,11 @@ class DataView extends StatelessWidget {
       int lineLength = remaining >= 8 ? 8 : remaining;
 
       // Build hex part
-      String hexPart = '';
+      StringBuffer hexPart = StringBuffer();
       for (int j = 0; j < lineLength; j++) {
-        hexPart += bytes[i + j].toRadixString(16).padLeft(2, '0').toUpperCase() + ' ';
+        hexPart.write('${bytes[i + j].toRadixString(16).padLeft(2, '0').toUpperCase()} ');
       }
-      buffer.writeln('$hexPart');
+      buffer.writeln(hexPart.toString());
     }
     return buffer.toString();
   }
@@ -30,16 +30,16 @@ class DataView extends StatelessWidget {
       int remaining = bytes.length - i;
       int lineLength = remaining >= 8 ? 8 : remaining;
 
-      String asciiPart = "";
+      StringBuffer asciiPart = StringBuffer();
       for (int j = 0; j < lineLength; j++) {
         int charCode = bytes[i + j];
         if (charCode >= 32 && charCode <= 126) {
-          asciiPart += String.fromCharCode(charCode);
+          asciiPart.write(String.fromCharCode(charCode));
         } else {
-          asciiPart += '.';
+          asciiPart.write('.');
         }
       }
-      buffer.writeln('$asciiPart');
+      buffer.writeln(asciiPart.toString());
     }
     return buffer.toString();
   }

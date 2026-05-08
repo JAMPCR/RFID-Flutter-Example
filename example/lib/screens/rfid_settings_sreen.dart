@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:zebra_rfid_sdk_example/screens/RFIDProfileScreen.dart';
-import 'package:zebra_rfid_sdk_example/screens/RFIDRegulatoryScreen.dart';
-import 'package:zebra_rfid_sdk_example/screens/RFIDBeeperScreen.dart';
+import 'package:zebra_rfid_sdk_example/screens/rfid_profile_screen.dart';
+import 'package:zebra_rfid_sdk_example/screens/rfid_regulatory_screen.dart';
+import 'package:zebra_rfid_sdk_example/screens/rfid_beeper_screen.dart';
 import 'package:zebra_rfid_sdk_example/widgets/menu_list.dart';
 import 'package:zebra_rfid_sdk_example/widgets/bottom_bar.dart';
 
@@ -27,7 +27,14 @@ class _RFIDSettingsScreen extends State<RFIDSettingsScreen> {
         title: "Profiles",
         icon: Icons.person,
         onTap: () {
-          Navigator.push(context, PageRouteBuilder(pageBuilder: (_, __, ___) => RFIDProfileScreen(), transitionDuration: const Duration(seconds: 0), reverseTransitionDuration: const Duration(seconds: 0)));
+          Navigator.push(
+            context,
+            PageRouteBuilder(
+              pageBuilder: (_, __, ___) => RFIDProfileScreen(),
+              transitionDuration: const Duration(seconds: 0),
+              reverseTransitionDuration: const Duration(seconds: 0),
+            ),
+          );
         },
       ),
     );
@@ -36,7 +43,14 @@ class _RFIDSettingsScreen extends State<RFIDSettingsScreen> {
         title: "Regulatory",
         icon: Icons.public,
         onTap: () {
-          Navigator.push(context, PageRouteBuilder(pageBuilder: (_, __, ___) => RFIDRegulatoryScreen(), transitionDuration: const Duration(seconds: 0), reverseTransitionDuration: const Duration(seconds: 0)));
+          Navigator.push(
+            context,
+            PageRouteBuilder(
+              pageBuilder: (_, __, ___) => RFIDRegulatoryScreen(),
+              transitionDuration: const Duration(seconds: 0),
+              reverseTransitionDuration: const Duration(seconds: 0),
+            ),
+          );
         },
       ),
     );
@@ -45,7 +59,14 @@ class _RFIDSettingsScreen extends State<RFIDSettingsScreen> {
         title: "Beeper",
         icon: Icons.volume_up,
         onTap: () {
-          Navigator.push(context, PageRouteBuilder(pageBuilder: (_, __, ___) => RFIDBeeperScreen(), transitionDuration: const Duration(seconds: 0), reverseTransitionDuration: const Duration(seconds: 0)));
+          Navigator.push(
+            context,
+            PageRouteBuilder(
+              pageBuilder: (_, __, ___) => RFIDBeeperScreen(),
+              transitionDuration: const Duration(seconds: 0),
+              reverseTransitionDuration: const Duration(seconds: 0),
+            ),
+          );
         },
       ),
     );
@@ -55,7 +76,11 @@ class _RFIDSettingsScreen extends State<RFIDSettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('RFID Settings'), centerTitle: true, elevation: 2),
+      appBar: AppBar(
+        title: const Text('RFID Settings'),
+        centerTitle: true,
+        elevation: 2,
+      ),
       body: MenuList(items: menuItems),
       bottomNavigationBar: BottomBar(currentScreen: Screen.settings),
     );

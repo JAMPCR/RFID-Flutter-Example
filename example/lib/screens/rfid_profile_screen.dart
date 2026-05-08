@@ -32,6 +32,7 @@ class _RFIDProfileScreen extends State<RFIDProfileScreen> {
     if (antenna == false) antenna = await ZebraRfidSdk.setAntennaConfig(300, rfMode: 2);
     var singulation = await ZebraRfidSdk.setSingulation(Session.S0, InvState.State_AB);
     var result = antenna && singulation;
+    if (!mounted) return;
     var snackBar = SnackBar(content: Text(result ? 'Profile Set' : 'Failed to set profile'), backgroundColor: result ? Colors.blue[800] : Colors.red[800]);
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
@@ -41,6 +42,7 @@ class _RFIDProfileScreen extends State<RFIDProfileScreen> {
     var antenna = await ZebraRfidSdk.setAntennaConfig(300);
     var singulation = await ZebraRfidSdk.setSingulation(Session.S2, InvState.State_A);
     var result = antenna && singulation;
+    if (!mounted) return;
     var snackBar = SnackBar(content: Text(result ? 'Profile Set' : 'Failed to set profile'), backgroundColor: result ? Colors.blue[800] : Colors.red[800]);
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
@@ -51,6 +53,7 @@ class _RFIDProfileScreen extends State<RFIDProfileScreen> {
     if (antenna == false) antenna = await ZebraRfidSdk.setAntennaConfig(300, rfMode: 1);
     var singulation = await ZebraRfidSdk.setSingulation(Session.S1, InvState.State_A);
     var result = antenna && singulation;
+    if (!mounted) return;
     var snackBar = SnackBar(content: Text(result ? 'Profile Set' : 'Failed to set profile'), backgroundColor: result ? Colors.blue[800] : Colors.red[800]);
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
@@ -60,6 +63,7 @@ class _RFIDProfileScreen extends State<RFIDProfileScreen> {
     var antenna = await ZebraRfidSdk.setAntennaConfig(240);
     var singulation = await ZebraRfidSdk.setSingulation(Session.S1, InvState.State_A);
     var result = antenna && singulation;
+    if (!mounted) return;
     var snackBar = SnackBar(content: Text(result ? 'Profile Set' : 'Failed to set profile'), backgroundColor: result ? Colors.blue[800] : Colors.red[800]);
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
@@ -69,6 +73,7 @@ class _RFIDProfileScreen extends State<RFIDProfileScreen> {
     var antenna = await ZebraRfidSdk.setAntennaConfig(270);
     var singulation = await ZebraRfidSdk.setSingulation(Session.S1, InvState.State_A);
     var result = antenna && singulation;
+    if (!mounted) return;
     var snackBar = SnackBar(content: Text(result ? 'Profile Set' : 'Failed to set profile'), backgroundColor: result ? Colors.blue[800] : Colors.red[800]);
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
